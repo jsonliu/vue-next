@@ -6,6 +6,7 @@
 
 <script>
   // import { reactive, computed } from 'vue'
+  // 测试修改...
   import { reactive, computed } from '../packages/vue/dist/vue.global.js'
 
   export default {
