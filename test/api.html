@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <div id='app'></div>
+</body>
+<script src="../packages/vue/dist/vue.global.js"></script>
+<script>
+    const { createApp, computed, watch, onMounted, reactive, onUpdated, onUnmounted, value, ref, effect } = Vue;
+    const App = {
+        template:
+            `<div>
+            <span>count is {{ count }}</span><br>
+            <span>state count is {{ state.count }}</span><br>
+            <span>plusOne is {{ plusOne }}</span><br>
+            <button @click="increment">count++</button>
+            <button @click="refIncrement">refCount++</button>
+            </div>`,
+        setup() {
+            // reactive state
+            // const count = value(0)
+            const count = ref(0)
+            const state = reactive({
+                count: 0,
+            })
+            // computed state
+            const plusOne = computed(() => state.count + 1)
+            // method
+            const increment = () => { state.count++ }
+            function refIncrement() {
+                count.value++
+            }
+            // watch
+            watch(() => state.count * 2, val => {
+                console.log(`watch count * 2 is ${val}`)
+            })
+            // effect
+            effect(() => {
+                console.log('effect count: ', state.count)
+            })
+            // lifecycle
+            onMounted(() => {
+                console.log(`mounted`)
+            })
+            onUpdated(() => {
+                console.log('updated!')
+            })
+            // destroyed 调整为 unmounted
+            onUnmounted(() => {
+                console.log('unmounted!')
+            })
+            // expose bindings on render context
+            return {
+                count,
+                state,
+                plusOne,
+                increment,
+                refIncrement
+            }
+        }
+    }
+    var p = createApp().mount(App, '#app')
+</script>
+
+</html>

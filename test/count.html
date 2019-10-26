@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <div id='app'></div>
+</body>
+<script src="../packages/vue/dist/vue.global.js"></script>
+<script>
+    const { createApp, reactive, computed } = Vue;
+    const RootComponent = {
+        template: `
+        <button @click="increment">
+          Count is: {{ state.count }}
+        </button>
+      `,
+        setup() {
+            const state = reactive({
+                count: 0,
+            })
+            function increment() {
+                state.count++
+            }
+            return {
+                state,
+                increment
+            }
+        }
+    }
+    createApp().mount(RootComponent, '#app')
+</script>
+
+</html>
